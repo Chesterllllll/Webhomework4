@@ -1,0 +1,5 @@
+${AnsiColor.BRIGHT_CYAN}:
+${application.version}:
+${application.formatted-version}:
+${spring-boot.version}:
+${spring-boot.formatted-version}:

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>添加联系人</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+<div class="wrap">
+    <div class="container">
+        <!-- <div class="scaleX"> -->
+        <h1 style=" margin: 0; text-align: center;
+            text-shadow: 1px 1px 1px; font:verdana;font-size:26px">添加联系人<br></h1>
+        <form th:action="@{/add}" method="post">
+            <label><input type="text" placeholder="Name chester (Required)" required=true name="name"/></label>
+            <label><input type="text" placeholder="Phone 133 3333 3333" pattern=[0-9]{11} name="phone"/></label>
+            <label><input type="text" placeholder="Email xxx@xx.com" name="email"
+                          pattern="^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$"/></label>
+            <label><input type="text" placeholder="Address xxxx" name="address"/></label>
+            <label><input type="text" placeholder="qq" pattern=[0-9]* name="qq"/></label>
+            <input type="submit" value="Add" onclick="IfValid()"/>
+        </form>
+        <!-- </div> -->
+        <ul>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+</div>
+</body>
+
+</html>
