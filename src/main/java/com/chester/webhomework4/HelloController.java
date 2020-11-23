@@ -3,9 +3,7 @@ package com.chester.webhomework4;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.util.StringUtils;
 
 import javax.annotation.PostConstruct;
@@ -21,11 +19,9 @@ import java.util.Map;
 
 @Controller
 @Scope("session")
+//@SessionAttributes("mapList")
 public class HelloController {
-    //    @GetMapping("/index")
-//    public String SayHello(){
-//        return "login";
-//    }
+    //    , @SessionAttribute(required = false) List<Map<String, Object>> mapList
     List<Map<String, Object>> mapList;
 
     @PostConstruct
@@ -58,54 +54,70 @@ public class HelloController {
 
     @RequestMapping("/addrList")//联系人列表页面
     public String addrList(HttpSession session, Model model) {
-        String name = (String) session.getAttribute("name");
-        String phone = (String) session.getAttribute("phone");
-        String email = (String) session.getAttribute("email");
-        String address = (String) session.getAttribute("address");
-        String qq = (String) session.getAttribute("qq");
-        System.out.println("addrList 需要联系人 名字为" + name);
-        Map<String, Object> temp = new HashMap<String, Object>() {
-            {
-                put("name", name);
-                put("phone", phone);
-                put("email", email);
-                put("address", address);
-                put("qq", qq);
-            }
-        };
-        if (name == null) {
-            temp = new HashMap<String, Object>() {
-                {
-                    put("name", "default");
-                    put("phone", "1333333333");
-                    put("email", "chester@gmail.com");
-                    put("address", "Beijing");
-                    put("qq", "24131");
-                }
-            };
+        if (mapList == null) {
+            mapList = new ArrayList<Map<String, Object>>();
         }
-        mapList.add(temp);
+        model.addAttribute("conList", mapList);
+        System.out.println(mapList);
         model.addAttribute("conList", mapList);
         return "addrList";
     }
 
     @RequestMapping("/add")//添加联系人页面
-    public String addContact(HttpServletRequest request) {
+    public String addContact(HttpServletRequest request, Model model) {
         String name = request.getParameter("name");
         String phone = request.getParameter("phone");
         String email = request.getParameter("email");
         String address = request.getParameter("address");
         String qq = request.getParameter("qq");
         if (name != null) {
-            request.getSession().setAttribute("name", name);
-            request.getSession().setAttribute("phone", phone);
-            request.getSession().setAttribute("email", email);
-            request.getSession().setAttribute("address", address);
-            request.getSession().setAttribute("qq", qq);
-            System.out.println("addContact 添加联系人 名字为" + name);
+            Map<String, Object> temp = new HashMap<String, Object>() {
+                {
+                    put("name", name);
+                    put("phone", phone);
+                    put("email", email);
+                    put("address", address);
+                    put("qq", qq);
+                }
+            };
+            mapList.add(temp);
+            model.addAttribute("conList", mapList);
             return "redirect:/addrList";
         }
         return "addContact";
+    }
+
+    @GetMapping("/delete")
+    String delete(@RequestParam int listId, Model model) {
+        mapList.remove(listId);
+        model.addAttribute("conList", mapList);
+        return "redirect:/addrList";
+    }
+
+    @RequestMapping("/edit")
+    String edit(@RequestParam int listId, Model model, HttpServletRequest request) {
+        String name = request.getParameter("name");
+        String phone = request.getParameter("phone");
+        String email = request.getParameter("email");
+        String address = request.getParameter("address");
+        String qq = request.getParameter("qq");
+        if (name != null) {
+            Map<String, Object> temp = new HashMap<String, Object>() {
+                {
+                    put("name", name);
+                    put("phone", phone);
+                    put("email", email);
+                    put("address", address);
+                    put("qq", qq);
+                }
+            };
+            mapList.set(listId, temp);
+            model.addAttribute("conList", mapList);
+            return "redirect:/addrList";
+        }
+        model.addAttribute("listId", listId);
+        model.addAttribute("ediCon", mapList.get(listId));
+        return "editContact";
     }
 
     @RequestMapping("/loginout")

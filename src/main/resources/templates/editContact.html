@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>添加联系人</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+<div class="wrap">
+    <div class="container">
+        <!-- <div class="scaleX"> -->
+        <h1 style=" margin: 0; text-align: center;
+            text-shadow: 1px 1px 1px; font:verdana;font-size:26px">添加联系人<br></h1>
+        <form th:action="@{/edit}" method="post">
+                <input type="hidden" name="listId" value="1" th:value="${listId}">
+            <label><input type="text" th:value="${ediCon.name}" required=true name="name"/></label>
+            <label><input type="text" th:value="${ediCon.phone}" pattern=[0-9]{11} name="phone"/></label>
+            <label><input type="text" th:value="${ediCon.email}" name="email"
+                          pattern="^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$"/></label>
+            <label><input type="text" th:value="${ediCon.address}" name="address"/></label>
+            <label><input type="text" th:value="${ediCon.qq}" pattern=[0-9]* name="qq"/></label>
+            <input type="submit" value="Edit" onclick="IfValid()"/>
+        </form>
+        <!-- </div> -->
+        <ul>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+</div>
+</body>
+
+</html>

@@ -10,35 +10,41 @@
 <body>
 <div class="wrap">
     <a href="./add" class="buttonClass">添加</a>
-    <a href="#" class="buttonClass">编辑</a>
-    <a href="#" class="buttonClass">删除</a>
+    <!--    <a href="#" class="buttonClass">编辑</a>-->
+    <!--    <a href="#" class="buttonClass">删除</a>-->
     <a href="./loginout" class="buttonClass">退出</a>
     <table id="table-2">
         <thead>
-        <th>Index</th>
+<!--        <th>Index</th>-->
         <th>Name</th>
         <th>Phone</th>
         <th>Email</th>
         <th>Address</th>
         <th>QQ</th>
+        <th></th>
         </thead>
 
-        <tbody>
-<!--        <tr>-->
-<!--&lt;!&ndash;            <td>0</td>&ndash;&gt;-->
-<!--            <td>Chester</td>-->
-<!--            <td>+86 111 1111 1111</td>-->
-<!--            <td>chester@gmail.com</td>-->
-<!--            <td>Beijing</td>-->
-<!--            <td>1111111</td>-->
-<!--        </tr>-->
+        <tbody th:remove="all-but-first">
+        <!--        <tr>-->
+        <!--&lt;!&ndash;            <td>0</td>&ndash;&gt;-->
+        <!--            <td>Chester</td>-->
+        <!--            <td>+86 111 1111 1111</td>-->
+        <!--            <td>chester@gmail.com</td>-->
+        <!--            <td>Beijing</td>-->
+        <!--            <td>1111111</td>-->
+        <!--        </tr>-->
         <tr th:each="contact,stat:${conList}">
-            <td th:text="${stat.index}"></td>
+<!--            <td th:text="${stat.index}"></td>-->
             <td th:text="${contact.name}"></td>
             <td th:text="${contact.phone}"></td>
             <td th:text="${contact.email}"></td>
             <td th:text="${contact.address}"></td>
             <td th:text="${contact.qq}"></td>
+            <td><a type="button" class="btn"
+                   th:href="@{/edit(listId=${stat.index})}">编辑</a>
+                <a type="button" class="btn"
+                   th:href="@{/delete(listId=${stat.index})}">删除</a>
+            </td>
         </tr>
         </tbody>
     </table>
